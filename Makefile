@@ -1,8 +1,8 @@
 build:
-	@go build -o bin/fs
+	@go build -o ./bin/gdfs ./...
 
 run: build
-	@./bin/fs
+	@./bin/gdfs
 
 test:
 	@go test ./... -v
