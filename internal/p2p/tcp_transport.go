@@ -30,8 +30,6 @@ type TCPTransport struct {
 	peers map[net.Addr]Peer
 }
 
-func NOPHandshake(any) error { return nil }
-
 func NewTCPTransport(listenAddr string) *TCPTransport {
 	return &TCPTransport{
 		listenAddress: listenAddr,
@@ -64,7 +62,13 @@ func (t *TCPTransport) startAcceptLoop() {
 }
 
 func (t *TCPTransport) handleConn(conn net.Conn) {
+	var err error
+
 	peer := NewTCPPeer(conn, true)
+
+	if err = t.shakeHands(conn); err != nil {
+		return
+	}
 
 	fmt.Printf("new incoming connection %+v\n", peer)
 }
