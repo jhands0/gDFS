@@ -24,7 +24,7 @@ func NewTCPPeer(conn net.Conn, outbound bool) *TCPPeer {
 type TCPTransport struct {
 	listenAddress string
 	listener      net.Listener
-	handshakeFunc HandshakeFunc
+	shakeHands    HandshakeFunc
 
 	mu    sync.RWMutex
 	peers map[net.Addr]Peer
@@ -35,7 +35,7 @@ func NOPHandshake(any) error { return nil }
 func NewTCPTransport(listenAddr string) *TCPTransport {
 	return &TCPTransport{
 		listenAddress: listenAddr,
-		handshakeFunc: NOPHandshake,
+		shakeHands:    NOPHandshake,
 	}
 }
 
