@@ -10,5 +10,9 @@ type GDFS struct{}
 
 func (g *GDFS) Init() {
 	tr := p2p.NewTCPTransport(":3000")
-	log.Fatal(tr.ListenAndAccept())
+	if err := tr.ListenAndAccept(); err != nil {
+		log.Fatal(err)
+	}
+
+	select {}
 }
