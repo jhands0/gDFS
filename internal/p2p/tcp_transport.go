@@ -6,6 +6,21 @@ import (
 	"sync"
 )
 
+type TCPPeer struct {
+	conn net.Conn
+
+	// outbound is True if we dial the other peer
+	// outbound is False if we accept the other peer
+	outbound bool
+}
+
+func NewTCPPeer(conn net.Conn, outbound bool) *TCPPeer {
+	return &TCPPeer{
+		conn:     conn,
+		outbound: outbound,
+	}
+}
+
 type TCPTransport struct {
 	listenAddress string
 	listener      net.Listener
