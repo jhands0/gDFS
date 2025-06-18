@@ -6,9 +6,9 @@ import (
 	"github.com/jhands0/gDFS/internal/p2p"
 )
 
-type gDFS struct{}
+type GDFS struct{}
 
-func (g *gDFS) Init() {
+func (g *GDFS) Init() {
 	tr := p2p.NewTCPTransport(":3000")
 	log.Fatal(tr.ListenAndAccept())
 }

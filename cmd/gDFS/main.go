@@ -1,7 +1,8 @@
 package main
 
-import "fmt"
+import "github.com/jhands0/gDFS/internal"
 
 func main() {
-	fmt.Println("test")
+	gDFS := internal.GDFS{}
+	gDFS.Init()
 }
