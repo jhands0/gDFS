@@ -71,7 +71,7 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 
 	peer := NewTCPPeer(conn, true)
 
-	if err = t.shakeHands(conn); err != nil {
+	if err = t.shakeHands(peer); err != nil {
 		return
 	}
 
