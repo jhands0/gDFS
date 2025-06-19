@@ -9,7 +9,12 @@ import (
 type GDFS struct{}
 
 func (g *GDFS) Init() {
-	tr := p2p.NewTCPTransport(":3000")
+	to := p2p.TCPTransportOptions{
+		ListenAddress: ":3000",
+		ShakeHands:    p2p.NOPHandshake,
+		Decoder:       p2p.DefaultDecoder{},
+	}
+	tr := p2p.NewTCPTransport(to)
 	if err := tr.ListenAndAccept(); err != nil {
 		log.Fatal(err)
 	}
