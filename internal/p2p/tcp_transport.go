@@ -72,6 +72,8 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 	peer := NewTCPPeer(conn, true)
 
 	if err = t.shakeHands(peer); err != nil {
+		fmt.Printf("TCP error: %s\n", err)
+		conn.Close()
 		return
 	}
 
