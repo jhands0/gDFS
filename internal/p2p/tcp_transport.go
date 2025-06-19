@@ -25,6 +25,7 @@ type TCPTransport struct {
 	listenAddress string
 	listener      net.Listener
 	shakeHands    HandshakeFunc
+	decoder       Decoder
 
 	mu    sync.RWMutex
 	peers map[net.Addr]Peer
