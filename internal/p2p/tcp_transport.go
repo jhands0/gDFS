@@ -76,9 +76,16 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 	}
 
 	// Message read loop
+	decoderErrorCount := 0
 	msg := &Temp{}
 	for {
 		if err := t.decoder.Decode(conn, msg); err != nil {
+
+			decoderErrorCount++
+			if decoderErrorCount >= 4 {
+				return
+			}
+
 			fmt.Printf("TCP error: %s\n", err)
 			continue
 		}
