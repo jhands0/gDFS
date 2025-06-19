@@ -58,9 +58,13 @@ func (t *TCPTransport) startAcceptLoop() {
 			fmt.Printf("TCP accept error: %s\n", err)
 		}
 
+		fmt.Printf("new incoming connection %+v\n", conn)
+
 		go t.handleConn(conn)
 	}
 }
+
+type Temp struct{}
 
 func (t *TCPTransport) handleConn(conn net.Conn) {
 	var err error
@@ -71,5 +75,13 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 		return
 	}
 
-	fmt.Printf("new incoming connection %+v\n", peer)
+	// Message read loop
+	msg := &Temp{}
+	for {
+		if err := t.decoder.Decode(conn, msg); err != nil {
+			fmt.Printf("TCP error: %s\n", err)
+			continue
+		}
+	}
+
 }
