@@ -22,9 +22,9 @@ func NewTCPPeer(conn net.Conn, outbound bool) *TCPPeer {
 }
 
 type TCPTransportOptions struct {
-	listenAddress string
-	shakeHands    HandshakeFunc
-	decoder       Decoder
+	ListenAddress string
+	ShakeHands    HandshakeFunc
+	Decoder       Decoder
 }
 
 type TCPTransport struct {
@@ -44,7 +44,7 @@ func NewTCPTransport(options TCPTransportOptions) *TCPTransport {
 func (t *TCPTransport) ListenAndAccept() error {
 	var err error
 
-	t.listener, err = net.Listen("tcp", t.listenAddress)
+	t.listener, err = net.Listen("tcp", t.ListenAddress)
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 
 	peer := NewTCPPeer(conn, true)
 
-	if err = t.shakeHands(peer); err != nil {
+	if err = t.ShakeHands(peer); err != nil {
 		fmt.Printf("TCP error: %s\n", err)
 		conn.Close()
 		return
@@ -84,7 +84,7 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 	decoderErrorCount := 0
 	msg := &Temp{}
 	for {
-		if err := t.decoder.Decode(conn, msg); err != nil {
+		if err := t.Decoder.Decode(conn, msg); err != nil {
 
 			decoderErrorCount++
 			if decoderErrorCount >= 4 {
