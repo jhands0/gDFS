@@ -21,20 +21,23 @@ func NewTCPPeer(conn net.Conn, outbound bool) *TCPPeer {
 	}
 }
 
-type TCPTransport struct {
+type TCPTransportOptions struct {
 	listenAddress string
-	listener      net.Listener
 	shakeHands    HandshakeFunc
 	decoder       Decoder
+}
+
+type TCPTransport struct {
+	TCPTransportOptions
+	listener net.Listener
 
 	mu    sync.RWMutex
 	peers map[net.Addr]Peer
 }
 
-func NewTCPTransport(listenAddr string) *TCPTransport {
+func NewTCPTransport(options TCPTransportOptions) *TCPTransport {
 	return &TCPTransport{
-		listenAddress: listenAddr,
-		shakeHands:    NOPHandshake,
+		TCPTransportOptions: options,
 	}
 }
 
