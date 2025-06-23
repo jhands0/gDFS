@@ -67,8 +67,6 @@ func (t *TCPTransport) startAcceptLoop() {
 	}
 }
 
-type Temp struct{}
-
 func (t *TCPTransport) handleConn(conn net.Conn) {
 	var err error
 
@@ -82,7 +80,7 @@ func (t *TCPTransport) handleConn(conn net.Conn) {
 
 	// Message read loop
 	decoderErrorCount := 0
-	msg := &Temp{}
+	msg := &Message{}
 	for {
 		if err := t.Decoder.Decode(conn, msg); err != nil {
 
